@@ -1,4 +1,3 @@
-import { SudokuIndexes } from "./SudokuIndexes.js"
 import { SudokuIndex } from "./SudokuIndex.js"
 import { Line } from "./Line.js"
 

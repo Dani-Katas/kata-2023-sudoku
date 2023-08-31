@@ -1,8 +1,6 @@
-import { describe, it, expect } from "vitest"
+import { describe, it } from "vitest"
 import { SudokuSolver } from "./SudokuSolver.js"
-import { FileSystem } from "./FileSystem.js"
 import { FileSystemFake } from "./FileSystemFake.js"
-import { Printer } from "./Printer.js"
 import { PrinterFake } from "./PrinterFake.js"
 
 describe("Sudoku solver", () => {
