@@ -2,6 +2,11 @@ import { Sudoku } from "../entities/Sudoku.js"
 
 export class SudokuParser {
   parse(sudokuRaw: string): Sudoku {
-    throw new Error("Unimplemented method SudokuParser#parse")
+    const matrix = sudokuRaw
+      .trim()
+      .split("\n")
+      .map((el) => el.split("\t").map((el) => (el === "-" ? null : parseInt(el))))
+
+    return Sudoku.fromMatrix(matrix)
   }
 }
