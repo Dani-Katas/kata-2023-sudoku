@@ -1,4 +1,4 @@
-import { Sudoku } from "./Sudoku.js"
+import { Sudoku } from "../entities/Sudoku.js"
 
 export class SudokuParser {
   parse(sudokuRaw: string): Sudoku {
