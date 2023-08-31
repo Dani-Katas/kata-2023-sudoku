@@ -103,5 +103,169 @@ describe("sudoku", () => {
 
       expect(result).toBe(false)
     })
+
+    describe("blocks", () => {
+      it("is invalid with duplicated numbers in first block", () => {
+        const sudoku = Sudoku.fromMatrix([
+          [1, 2, 3, null, null, null, null, null, null],
+          [4, 5, 6, null, null, null, null, null, null],
+          [7, 8, 1, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+        ])
+
+        const result = sudoku.isValid()
+
+        expect(result).toBe(false)
+      })
+
+      it("is invalid with duplicated numbers in the second block", () => {
+        const sudoku = Sudoku.fromMatrix([
+          [null, null, null, 1, 2, 3, null, null, null],
+          [null, null, null, 4, 5, 6, null, null, null],
+          [null, null, null, 7, 8, 1, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+        ])
+
+        const result = sudoku.isValid()
+
+        expect(result).toBe(false)
+      })
+
+      it("is invalid with duplicated numbers in the third block", () => {
+        const sudoku = Sudoku.fromMatrix([
+          [null, null, null, null, null, null, 1, 2, 3],
+          [null, null, null, null, null, null, 4, 5, 6],
+          [null, null, null, null, null, null, 7, 8, 1],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+        ])
+
+        const result = sudoku.isValid()
+
+        expect(result).toBe(false)
+      })
+
+      it("is invalid with duplicated numbers in the fourth block", () => {
+        const sudoku = Sudoku.fromMatrix([
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [1, 2, 3, null, null, null, null, null, null],
+          [4, 5, 6, null, null, null, null, null, null],
+          [7, 8, 1, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+        ])
+
+        const result = sudoku.isValid()
+
+        expect(result).toBe(false)
+      })
+
+      it("is invalid with duplicated numbers in the fifth block", () => {
+        const sudoku = Sudoku.fromMatrix([
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, 1, 2, 3, null, null, null],
+          [null, null, null, 4, 5, 6, null, null, null],
+          [null, null, null, 7, 8, 1, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+        ])
+
+        const result = sudoku.isValid()
+
+        expect(result).toBe(false)
+      })
+
+      it("is invalid with duplicated numbers in the sixth block", () => {
+        const sudoku = Sudoku.fromMatrix([
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, 1, 2, 3],
+          [null, null, null, null, null, null, 4, 5, 6],
+          [null, null, null, null, null, null, 7, 8, 1],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+        ])
+
+        const result = sudoku.isValid()
+
+        expect(result).toBe(false)
+      })
+
+      it("is invalid with duplicated numbers in the seventh block", () => {
+        const sudoku = Sudoku.fromMatrix([
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [1, 2, 3, null, null, null, null, null, null],
+          [4, 5, 6, null, null, null, null, null, null],
+          [7, 8, 1, null, null, null, null, null, null],
+        ])
+
+        const result = sudoku.isValid()
+
+        expect(result).toBe(false)
+      })
+
+      it("is invalid with duplicated numbers in the eightth block", () => {
+        const sudoku = Sudoku.fromMatrix([
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, 1, 2, 3, null, null, null],
+          [null, null, null, 4, 5, 6, null, null, null],
+          [null, null, null, 7, 8, 1, null, null, null],
+        ])
+
+        const result = sudoku.isValid()
+
+        expect(result).toBe(false)
+      })
+
+      it("is invalid with duplicated numbers in the last block", () => {
+        const sudoku = Sudoku.fromMatrix([
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, null, null, null],
+          [null, null, null, null, null, null, 1, 2, 3],
+          [null, null, null, null, null, null, 4, 5, 6],
+          [null, null, null, null, null, null, 7, 8, 1],
+        ])
+
+        const result = sudoku.isValid()
+
+        expect(result).toBe(false)
+      })
+    })
   })
 })

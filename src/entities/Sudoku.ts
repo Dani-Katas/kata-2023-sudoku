@@ -1,6 +1,8 @@
 import { SudokuIndex } from "./SudokuIndex.js"
 import { Line } from "./Line.js"
 import { SudokuIndexes } from "./SudokuIndexes.js"
+import { Block } from "./Block.js"
+import { Position } from "./Position.js"
 
 export class Sudoku {
   static fromMatrix(matrix: Array<Array<number | null>>): Sudoku {
@@ -19,6 +21,15 @@ export class Sudoku {
     }
     for (const index of SudokuIndexes.iterate()) {
       const valid = this.verticalLineAt(index).isValid()
+
+      if (!valid) {
+        return false
+      }
+    }
+
+    for (const index of SudokuIndexes.iterate()) {
+      const block = this.blockAt(index)
+      const valid = block.isValid()
 
       if (!valid) {
         return false
@@ -45,21 +56,50 @@ export class Sudoku {
     return true
   }
 
-  private horizontalLineAt(index: SudokuIndex) {
-    const array = this.matrix[index.getValue()]
+  private horizontalLineAt(horizontalIndex: SudokuIndex) {
+    const elements: Array<number | null> = []
 
-    return Line.fromArray(array)
+    for (const verticalIndex of SudokuIndexes.iterate()) {
+      const position = Position.at(horizontalIndex, verticalIndex)
+      const value = this.getAt(position)
+      elements.push(value)
+    }
+
+    return Line.fromArray(elements)
   }
   private verticalLineAt(verticalIndex: SudokuIndex) {
     const elements: Array<number | null> = []
 
     for (const horizontalIndex of SudokuIndexes.iterate()) {
-      const value = this.matrix[horizontalIndex.getValue()][verticalIndex.getValue()]
-
+      const position = Position.at(horizontalIndex, verticalIndex)
+      const value = this.getAt(position)
       elements.push(value)
     }
 
     return Line.fromArray(elements)
+  }
+
+  private blockAt(index: SudokuIndex): Block {
+    const mod = (index.getValue() % 3) * 3
+    const div = Math.floor(index.getValue() / 3) * 3
+
+    return Block.fromArray([
+      this.matrix[0 + div][0 + mod],
+      this.matrix[0 + div][1 + mod],
+      this.matrix[0 + div][2 + mod],
+      this.matrix[1 + div][0 + mod],
+      this.matrix[1 + div][1 + mod],
+      this.matrix[1 + div][2 + mod],
+      this.matrix[2 + div][0 + mod],
+      this.matrix[2 + div][1 + mod],
+      this.matrix[2 + div][2 + mod],
+    ])
+  }
+
+  private getAt(position: Position) {
+    const i = position.getHorizontal().getValue()
+    const j = position.getVertical().getValue()
+    return this.matrix[i][j]
   }
 
   toString() {
