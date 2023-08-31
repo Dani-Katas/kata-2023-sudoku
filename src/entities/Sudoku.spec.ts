@@ -1,7 +1,5 @@
 import { describe, expect, it } from "vitest"
 import { Sudoku } from "./Sudoku.js"
-import { InvalidLineError } from "../errors/InvalidLineError.js"
-import { Cell } from "./Cell.js"
 
 describe("sudoku", () => {
   describe("equals", () => {
@@ -51,56 +49,59 @@ describe("sudoku", () => {
     })
   })
 
-  describe("sudoku validations", () => {
+  describe("sudoku is valid", () => {
     it("cannot be created all empty", () => {
-      const instantiation = () =>
-        Sudoku.fromMatrix([
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-        ])
+      const sudoku = Sudoku.fromMatrix([
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+      ])
 
-      expect(instantiation).not.toThrow()
+      const result = sudoku.isValid()
+
+      expect(result).toBe(true)
     })
 
-    it("cannot be created with invalid horizontal lines", () => {
-      const instantiation = () =>
-        Sudoku.fromMatrix([
-          [1, 2, 3, 4, 5, 6, 7, 8, 1],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-          [null, null, null, null, null, null, null, null, null],
-        ])
+    it("is invalid with duplicated numbers in horizontal lines", () => {
+      const sudoku = Sudoku.fromMatrix([
+        [1, 2, 3, 4, 5, 6, 7, 8, 1],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null],
+      ])
 
-      expect(instantiation).toThrowError(new InvalidLineError(new Cell(1)))
+      const result = sudoku.isValid()
+
+      expect(result).toBe(false)
     })
 
-    it("cannot be created with invalid vertical lines", () => {
-      const instantiation = () =>
-        Sudoku.fromMatrix([
-          [1, null, null, null, null, null, null, null, null],
-          [2, null, null, null, null, null, null, null, null],
-          [3, null, null, null, null, null, null, null, null],
-          [4, null, null, null, null, null, null, null, null],
-          [5, null, null, null, null, null, null, null, null],
-          [6, null, null, null, null, null, null, null, null],
-          [7, null, null, null, null, null, null, null, null],
-          [8, null, null, null, null, null, null, null, null],
-          [1, null, null, null, null, null, null, null, null],
-        ])
+    it("is invalid with duplicated numbers in vertical lines", () => {
+      const sudoku = Sudoku.fromMatrix([
+        [1, null, null, null, null, null, null, null, null],
+        [2, null, null, null, null, null, null, null, null],
+        [3, null, null, null, null, null, null, null, null],
+        [4, null, null, null, null, null, null, null, null],
+        [5, null, null, null, null, null, null, null, null],
+        [6, null, null, null, null, null, null, null, null],
+        [7, null, null, null, null, null, null, null, null],
+        [8, null, null, null, null, null, null, null, null],
+        [1, null, null, null, null, null, null, null, null],
+      ])
 
-      expect(instantiation).toThrowError(new InvalidLineError(new Cell(1)))
+      const result = sudoku.isValid()
+
+      expect(result).toBe(false)
     })
   })
 })

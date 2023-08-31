@@ -7,17 +7,25 @@ export class Sudoku {
     return new Sudoku(matrix)
   }
 
-  constructor(private readonly matrix: Array<Array<number | null>>) {
-    this.ensureIsValid()
-  }
+  constructor(private readonly matrix: Array<Array<number | null>>) {}
 
-  private ensureIsValid() {
+  public isValid(): boolean {
     for (const index of SudokuIndexes.iterate()) {
-      this.horizontalLineAt(index).ensureIsValid()
+      const valid = this.horizontalLineAt(index).isValid()
+
+      if (!valid) {
+        return false
+      }
     }
     for (const index of SudokuIndexes.iterate()) {
-      this.verticalLineAt(index).ensureIsValid()
+      const valid = this.verticalLineAt(index).isValid()
+
+      if (!valid) {
+        return false
+      }
     }
+
+    return true
   }
 
   solve(): Sudoku {

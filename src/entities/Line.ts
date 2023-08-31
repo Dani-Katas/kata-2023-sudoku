@@ -1,6 +1,5 @@
 import { SudokuIndex } from "./SudokuIndex.js"
 import { Cell } from "./Cell.js"
-import { InvalidLineError } from "../errors/InvalidLineError.js"
 import { SudokuIndexes } from "./SudokuIndexes.js"
 
 export class Line {
@@ -27,7 +26,7 @@ export class Line {
     return Cell.fromRaw(this.array[index.getValue()])
   }
 
-  ensureIsValid() {
+  isValid() {
     for (const index1 of SudokuIndexes.iterate()) {
       const cell = this.cellAt(index1)
       for (const index2 of SudokuIndexes.iterate()) {
@@ -37,9 +36,11 @@ export class Line {
         const hasSameNumber = cell.hasSameNumber(cell2)
 
         if (isNotTheSameCell && hasSameNumber) {
-          throw new InvalidLineError(cell)
+          return false
         }
       }
     }
+
+    return true
   }
 }
