@@ -80,143 +80,20 @@ export class Sudoku {
   }
 
   private blockAt(index: SudokuIndex): Block {
-    if (index.getValue() === 0) {
-      return Block.fromArray([
-        this.matrix[0 + 0][0 + 0],
-        this.matrix[0 + 0][1 + 0],
-        this.matrix[0 + 0][2 + 0],
-        this.matrix[1 + 0][0 + 0],
-        this.matrix[1 + 0][1 + 0],
-        this.matrix[1 + 0][2 + 0],
-        this.matrix[2 + 0][0 + 0],
-        this.matrix[2 + 0][1 + 0],
-        this.matrix[2 + 0][2 + 0],
-      ])
+    const [mod, div] = index.toModDiv()
+    const iOffset = div.times(3)
+    const jOffset = mod.times(3)
+
+    const elements: Array<number | null> = []
+
+    for (const innerIndex of SudokuIndexes.iterate()) {
+      const [mod2, div2] = innerIndex.toModDiv()
+      const position = Position.at(iOffset.add(mod2), jOffset.add(div2))
+      const value = this.getAt(position)
+      elements.push(value)
     }
 
-    if (index.getValue() === 1) {
-      return Block.fromArray([
-        this.matrix[0 + 0][0 + 3],
-        this.matrix[0 + 0][1 + 3],
-        this.matrix[0 + 0][2 + 3],
-        this.matrix[1 + 0][0 + 3],
-        this.matrix[1 + 0][1 + 3],
-        this.matrix[1 + 0][2 + 3],
-        this.matrix[2 + 0][0 + 3],
-        this.matrix[2 + 0][1 + 3],
-        this.matrix[2 + 0][2 + 3],
-      ])
-    }
-
-    if (index.getValue() === 2) {
-      return Block.fromArray([
-        this.matrix[0 + 0][0 + 6],
-        this.matrix[0 + 0][1 + 6],
-        this.matrix[0 + 0][2 + 6],
-        this.matrix[1 + 0][0 + 6],
-        this.matrix[1 + 0][1 + 6],
-        this.matrix[1 + 0][2 + 6],
-        this.matrix[2 + 0][0 + 6],
-        this.matrix[2 + 0][1 + 6],
-        this.matrix[2 + 0][2 + 6],
-      ])
-    }
-
-    if (index.getValue() === 3) {
-      return Block.fromArray([
-        this.matrix[0 + 3][0 + 0],
-        this.matrix[0 + 3][1 + 0],
-        this.matrix[0 + 3][2 + 0],
-        this.matrix[1 + 3][0 + 0],
-        this.matrix[1 + 3][1 + 0],
-        this.matrix[1 + 3][2 + 0],
-        this.matrix[2 + 3][0 + 0],
-        this.matrix[2 + 3][1 + 0],
-        this.matrix[2 + 3][2 + 0],
-      ])
-    }
-
-    if (index.getValue() === 4) {
-      return Block.fromArray([
-        this.matrix[0 + 3][0 + 3],
-        this.matrix[0 + 3][1 + 3],
-        this.matrix[0 + 3][2 + 3],
-        this.matrix[1 + 3][0 + 3],
-        this.matrix[1 + 3][1 + 3],
-        this.matrix[1 + 3][2 + 3],
-        this.matrix[2 + 3][0 + 3],
-        this.matrix[2 + 3][1 + 3],
-        this.matrix[2 + 3][2 + 3],
-      ])
-    }
-
-    if (index.getValue() === 5) {
-      return Block.fromArray([
-        this.matrix[0 + 3][0 + 6],
-        this.matrix[0 + 3][1 + 6],
-        this.matrix[0 + 3][2 + 6],
-        this.matrix[1 + 3][0 + 6],
-        this.matrix[1 + 3][1 + 6],
-        this.matrix[1 + 3][2 + 6],
-        this.matrix[2 + 3][0 + 6],
-        this.matrix[2 + 3][1 + 6],
-        this.matrix[2 + 3][2 + 6],
-      ])
-    }
-
-    if (index.getValue() === 6) {
-      return Block.fromArray([
-        this.matrix[0 + 6][0 + 0],
-        this.matrix[0 + 6][1 + 0],
-        this.matrix[0 + 6][2 + 0],
-        this.matrix[1 + 6][0 + 0],
-        this.matrix[1 + 6][1 + 0],
-        this.matrix[1 + 6][2 + 0],
-        this.matrix[2 + 6][0 + 0],
-        this.matrix[2 + 6][1 + 0],
-        this.matrix[2 + 6][2 + 0],
-      ])
-    }
-
-    if (index.getValue() === 7) {
-      return Block.fromArray([
-        this.matrix[0 + 6][0 + 3],
-        this.matrix[0 + 6][1 + 3],
-        this.matrix[0 + 6][2 + 3],
-        this.matrix[1 + 6][0 + 3],
-        this.matrix[1 + 6][1 + 3],
-        this.matrix[1 + 6][2 + 3],
-        this.matrix[2 + 6][0 + 3],
-        this.matrix[2 + 6][1 + 3],
-        this.matrix[2 + 6][2 + 3],
-      ])
-    }
-
-    if (index.getValue() === 8) {
-      return Block.fromArray([
-        this.matrix[0 + 6][0 + 6],
-        this.matrix[0 + 6][1 + 6],
-        this.matrix[0 + 6][2 + 6],
-        this.matrix[1 + 6][0 + 6],
-        this.matrix[1 + 6][1 + 6],
-        this.matrix[1 + 6][2 + 6],
-        this.matrix[2 + 6][0 + 6],
-        this.matrix[2 + 6][1 + 6],
-        this.matrix[2 + 6][2 + 6],
-      ])
-    }
-
-    return Block.fromArray([
-      this.matrix[0 + 0][0 + 0],
-      this.matrix[0 + 0][1 + 0],
-      this.matrix[0 + 0][2 + 0],
-      this.matrix[1 + 0][0 + 0],
-      this.matrix[1 + 0][1 + 0],
-      this.matrix[1 + 0][2 + 0],
-      this.matrix[2 + 0][0 + 0],
-      this.matrix[2 + 0][1 + 0],
-      this.matrix[2 + 0][2 + 0],
-    ])
+    return Block.fromArray(elements)
   }
 
   private getAt(position: Position) {

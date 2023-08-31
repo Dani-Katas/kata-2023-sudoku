@@ -3,10 +3,7 @@ import { Cell } from "./Cell.js"
 import { SudokuIndexes } from "./SudokuIndexes.js"
 
 export class Line {
-  constructor(private readonly array: Array<number | null>) {
-    const b = this.array.some((el) => el === undefined)
-    console.log(b)
-  }
+  constructor(private readonly array: Array<number | null>) {}
 
   static fromArray(array: Array<number | null>) {
     return new Line(array)

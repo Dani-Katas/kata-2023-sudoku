@@ -16,13 +16,17 @@ export class SudokuIndex {
   }
 
   toModDiv() {
-    const mod1 = (this.getValue() % 3) * 3
-    const div1 = Math.floor(this.getValue() / 3) * 3
+    const mod1 = this.getValue() % 3
+    const div1 = Math.floor(this.getValue() / 3)
 
     return [new SudokuIndex(mod1), new SudokuIndex(div1)] as const
   }
 
   add(other: SudokuIndex) {
     return new SudokuIndex(this.value + other.value)
+  }
+
+  times(other: number) {
+    return new SudokuIndex(this.value * other)
   }
 }
