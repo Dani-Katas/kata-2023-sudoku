@@ -9,10 +9,6 @@ export class Cell {
     return this.value !== other.value
   }
 
-  equals(other: Cell) {
-    return this.value === other.value
-  }
-
   isEmpty() {
     return this.value === null
   }
@@ -23,9 +19,5 @@ export class Cell {
     }
 
     return this.value === other.value
-  }
-
-  toString() {
-    return `${this.value}`
   }
 }
