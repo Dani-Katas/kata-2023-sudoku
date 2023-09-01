@@ -55,34 +55,30 @@ export class Sudoku {
     return true
   }
 
-  solve(): Sudoku {
-    const something: Array<Array<Sudoku>> = []
-
+  private getNextEmptyPosition() {
     for (const i of SudokuIndexes.iterate()) {
       for (const j of SudokuIndexes.iterate()) {
         const position = Position.at(i, j)
-        const cell = this.getCellAt(position)
 
-        if (cell.isEmpty()) {
-          const sudokus: Array<Sudoku> = []
-          for (const val of SudokuIndexes.iterate()) {
-            const sudoku = this.writeDown(position, val.getValue() + 1)
-
-            if (sudoku.isValid()) {
-              sudokus.push(sudoku)
-            }
-          }
-
-          something.push(sudokus)
+        if (this.getCellAt(position).isEmpty()) {
+          return position
         }
       }
     }
+  }
 
-    const sorted = something.sort((a, b) => a.length - b.length)
+  solve(): Sudoku {
+    const nextPosition = this.getNextEmptyPosition()
 
-    for (const sortedElement of sorted) {
-      for (const sudokus of sortedElement) {
-        const solved = sudokus.solve()
+    if (!nextPosition) {
+      return this
+    }
+
+    for (const sudokuIndex of SudokuIndexes.iterate()) {
+      const sudoku = this.writeDown(nextPosition, sudokuIndex.getValue() + 1)
+
+      if (sudoku.isValid()) {
+        const solved = sudoku.solve()
 
         if (solved.isFilled()) {
           return solved

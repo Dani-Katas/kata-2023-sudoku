@@ -408,8 +408,8 @@ describe("sudoku", () => {
       )
     })
 
-    it.skip("solves a complicated one", () => {
-      /*const sudoku = Sudoku.fromMatrix([
+    it("solves a complicated one", () => {
+      const sudoku = Sudoku.fromMatrix([
         [null, null, null, null, null, null, 3, null, null],
         [null, null, null, null, 9, 5, null, null, null],
         [null, null, 7, 8, 4, 3, 9, 1, null],
@@ -419,24 +419,21 @@ describe("sudoku", () => {
         [null, 4, null, 9, 3, null, 8, null, null],
         [null, null, null, null, null, 8, null, null, 2],
         [null, 6, 1, 5, null, null, null, null, null],
-      ])*/
-
-      const sudoku = Sudoku.fromMatrix([
-        [4, 8, 9, 2, 6, 1, 3, 7, 5],
-        [3, 1, 6, 7, 9, 5, 2, 8, 4],
-        [5, 2, 7, 8, 4, 3, 9, 1, 6],
-        [1, 5, 8, null, null, null, null, 9, null],
-        [6, 7, null, null, null, null, 1, null, null],
-        [null, null, null, 1, 8, 6, null, 4, null],
-        [null, 4, null, 9, 3, null, 8, null, null],
-        [null, null, null, null, null, 8, null, null, 2],
-        [null, 6, 1, 5, null, null, null, null, null],
       ])
 
       const solved = sudoku.solve()
 
-      console.log(solved.toString())
-      console.log(solved.isValid())
+      expect(solved.toString()).toEqual(`4 8 9 | 2 6 1 | 3 7 5
+3 1 6 | 7 9 5 | 2 8 4
+5 2 7 | 8 4 3 | 9 1 6
+---------------------
+1 5 8 | 4 7 2 | 6 9 3
+6 7 4 | 3 5 9 | 1 2 8
+9 3 2 | 1 8 6 | 5 4 7
+---------------------
+2 4 5 | 9 3 7 | 8 6 1
+7 9 3 | 6 1 8 | 4 5 2
+8 6 1 | 5 2 4 | 7 3 9`)
     })
   })
 
