@@ -14,25 +14,11 @@ export class Sudoku {
 
   public isValid(): boolean {
     for (const index of SudokuIndexes.iterate()) {
-      const valid = this.horizontalLineAt(index).isValid()
+      const validHorizontalLine = this.horizontalLineAt(index).isValid()
+      const validVerticalLine = this.verticalLineAt(index).isValid()
+      const validBlock = this.blockAt(index).isValid()
 
-      if (!valid) {
-        return false
-      }
-    }
-    for (const index of SudokuIndexes.iterate()) {
-      const valid = this.verticalLineAt(index).isValid()
-
-      if (!valid) {
-        return false
-      }
-    }
-
-    for (const index of SudokuIndexes.iterate()) {
-      const block = this.blockAt(index)
-      const valid = block.isValid()
-
-      if (!valid) {
+      if (!validHorizontalLine || !validVerticalLine || !validBlock) {
         return false
       }
     }
