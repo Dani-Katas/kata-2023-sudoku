@@ -12,17 +12,6 @@ const sample = `-\t-\t8\t-\t-\t-\t-\t1\t-
 -\t-\t5\t-\t-\t-\t4\t-\t3
 -\t7\t-\t5\t2\t-\t-\t9\t6`
 
-const sample2 = `-\t-\t-\t-\t-\t-\t3\t-\t-
--\t-\t-\t-\t9\t5\t-\t-\t-
--\t-\t7\t8\t4\t3\t9\t1\t-
--\t-\t8\t-\t-\t-\t-\t9\t-
-6\t7\t-\t-\t-\t-\t1\t-\t-
--\t-\t-\t1\t8\t6\t-\t4\t-
--\t4\t-\t9\t3\t-\t8\t-\t-
--\t-\t-\t-\t-\t8\t-\t-\t2
--\t6\t1\t5\t-\t-\t-\t-\t-
-`
-
 describe("SudokuPaser", () => {
   it("parses the given sudoku", () => {
     const sudokuParser = new SudokuParser()

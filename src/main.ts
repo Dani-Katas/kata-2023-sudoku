@@ -1,6 +1,5 @@
 import { SudokuSolver } from "./services/SudokuSolver.js"
 import { FileSystemFake } from "./services/FileSystemFake.js"
-import { PrinterFake } from "./services/PrinterFake.js"
 import { PrinterConsole } from "./services/PrinterConsole.js"
 
 const sudokuSolver = new SudokuSolver(new FileSystemFake(), new PrinterConsole())

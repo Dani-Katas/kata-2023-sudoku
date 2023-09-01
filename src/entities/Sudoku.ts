@@ -152,7 +152,7 @@ export class Sudoku {
   private createEmptyMatrixCell(): Array<Array<Cell>> {
     const fill: number[] = new Array(9).fill(0)
 
-    return fill.map((el) => new Array(9).fill(Cell.empty()))
+    return fill.map(() => new Array(9).fill(Cell.empty()))
   }
 
   private *eachSudokuPosition() {
