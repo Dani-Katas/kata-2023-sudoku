@@ -1,11 +1,11 @@
 import { describe, it } from "vitest"
 import { SudokuSolver } from "./SudokuSolver.js"
-import { FileSystemFake } from "./FileSystemFake.js"
+import { FileSystemNode } from "./FileSystemNode.js"
 import { PrinterFake } from "./PrinterFake.js"
 
 describe("Sudoku solver", () => {
   it("loads the sudoku of the given path", () => {
-    const fileSystem = new FileSystemFake()
+    const fileSystem = new FileSystemNode()
     const printer = new PrinterFake()
     const sudokuSolver = new SudokuSolver(fileSystem, printer)
 
