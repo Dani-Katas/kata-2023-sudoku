@@ -15,14 +15,14 @@ describe("sudoku", () => {
         [8, 9, 1, 2, 3, 4, 5, 6, 7],
         [9, 1, 2, 3, 4, 5, 6, 7, 8],
       ]
-      const sudoku1 = Sudoku.fromMatrix(matrix)
-      const sudoku2 = Sudoku.fromMatrix(matrix)
+      const sudoku1 = Sudoku.fromRaw(matrix)
+      const sudoku2 = Sudoku.fromRaw(matrix)
 
       expect(sudoku1.equals(sudoku2)).toBe(true)
     })
 
     it("returns false if any number is different", () => {
-      const sudoku1 = Sudoku.fromMatrix([
+      const sudoku1 = Sudoku.fromRaw([
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
         [2, 3, 4, 5, 6, 7, 8, 9, 1],
         [3, 4, 5, 6, 7, 8, 9, 1, 2],
@@ -33,7 +33,7 @@ describe("sudoku", () => {
         [8, 9, 1, 2, 3, 4, 5, 6, 7],
         [9, 1, 2, 3, 4, 5, 6, 7, 8],
       ])
-      const sudoku2 = Sudoku.fromMatrix([
+      const sudoku2 = Sudoku.fromRaw([
         [5, 3, 8, 4, 6, 2, 7, 1, 9],
         [1, 2, 9, 7, 8, 3, 6, 4, 5],
         [7, 4, 6, 9, 5, 1, 2, 3, 8],
@@ -51,7 +51,7 @@ describe("sudoku", () => {
 
   describe("sudoku is valid", () => {
     it("cannot be created all empty", () => {
-      const sudoku = Sudoku.fromMatrix([
+      const sudoku = Sudoku.fromRaw([
         [null, null, null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null, null, null],
@@ -69,7 +69,7 @@ describe("sudoku", () => {
     })
 
     it("is invalid with duplicated numbers in horizontal lines", () => {
-      const sudoku = Sudoku.fromMatrix([
+      const sudoku = Sudoku.fromRaw([
         [1, 2, 3, 4, 5, 6, 7, 8, 1],
         [null, null, null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null, null, null],
@@ -87,7 +87,7 @@ describe("sudoku", () => {
     })
 
     it("is invalid with duplicated numbers in vertical lines", () => {
-      const sudoku = Sudoku.fromMatrix([
+      const sudoku = Sudoku.fromRaw([
         [1, null, null, null, null, null, null, null, null],
         [2, null, null, null, null, null, null, null, null],
         [3, null, null, null, null, null, null, null, null],
@@ -106,7 +106,7 @@ describe("sudoku", () => {
 
     describe("blocks", () => {
       it("is invalid with duplicated numbers in first block", () => {
-        const sudoku = Sudoku.fromMatrix([
+        const sudoku = Sudoku.fromRaw([
           [1, 2, 3, null, null, null, null, null, null],
           [4, 5, 6, null, null, null, null, null, null],
           [7, 8, 1, null, null, null, null, null, null],
@@ -124,7 +124,7 @@ describe("sudoku", () => {
       })
 
       it("is invalid with duplicated numbers in the second block", () => {
-        const sudoku = Sudoku.fromMatrix([
+        const sudoku = Sudoku.fromRaw([
           [null, null, null, 1, 2, 3, null, null, null],
           [null, null, null, 4, 5, 6, null, null, null],
           [null, null, null, 7, 8, 1, null, null, null],
@@ -142,7 +142,7 @@ describe("sudoku", () => {
       })
 
       it("is invalid with duplicated numbers in the third block", () => {
-        const sudoku = Sudoku.fromMatrix([
+        const sudoku = Sudoku.fromRaw([
           [null, null, null, null, null, null, 1, 2, 3],
           [null, null, null, null, null, null, 4, 5, 6],
           [null, null, null, null, null, null, 7, 8, 1],
@@ -160,7 +160,7 @@ describe("sudoku", () => {
       })
 
       it("is invalid with duplicated numbers in the fourth block", () => {
-        const sudoku = Sudoku.fromMatrix([
+        const sudoku = Sudoku.fromRaw([
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
@@ -178,7 +178,7 @@ describe("sudoku", () => {
       })
 
       it("is invalid with duplicated numbers in the fifth block", () => {
-        const sudoku = Sudoku.fromMatrix([
+        const sudoku = Sudoku.fromRaw([
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
@@ -196,7 +196,7 @@ describe("sudoku", () => {
       })
 
       it("is invalid with duplicated numbers in the sixth block", () => {
-        const sudoku = Sudoku.fromMatrix([
+        const sudoku = Sudoku.fromRaw([
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
@@ -214,7 +214,7 @@ describe("sudoku", () => {
       })
 
       it("is invalid with duplicated numbers in the seventh block", () => {
-        const sudoku = Sudoku.fromMatrix([
+        const sudoku = Sudoku.fromRaw([
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
@@ -232,7 +232,7 @@ describe("sudoku", () => {
       })
 
       it("is invalid with duplicated numbers in the eightth block", () => {
-        const sudoku = Sudoku.fromMatrix([
+        const sudoku = Sudoku.fromRaw([
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
@@ -250,7 +250,7 @@ describe("sudoku", () => {
       })
 
       it("is invalid with duplicated numbers in the last block", () => {
-        const sudoku = Sudoku.fromMatrix([
+        const sudoku = Sudoku.fromRaw([
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
           [null, null, null, null, null, null, null, null, null],
@@ -268,7 +268,7 @@ describe("sudoku", () => {
       })
 
       it("debug", () => {
-        const sudoku = Sudoku.fromMatrix([
+        const sudoku = Sudoku.fromRaw([
           [4, 8, 9, 2, 6, 1, 3, 7, 5],
           [3, 1, 6, 7, 9, 5, 2, 8, 4],
           [5, 2, 7, 8, 4, 3, 9, 1, 6],
@@ -289,7 +289,7 @@ describe("sudoku", () => {
 
   describe("solves it", () => {
     it("does nothing if its solved", () => {
-      const sudoku = Sudoku.fromMatrix([
+      const sudoku = Sudoku.fromRaw([
         [5, 3, 8, 4, 6, 2, 7, 1, 9],
         [1, 2, 9, 7, 8, 3, 6, 4, 5],
         [7, 4, 6, 9, 5, 1, 2, 3, 8],
@@ -304,7 +304,7 @@ describe("sudoku", () => {
       const solved = sudoku.solve()
 
       expect(solved).toEqual(
-        Sudoku.fromMatrix([
+        Sudoku.fromRaw([
           [5, 3, 8, 4, 6, 2, 7, 1, 9],
           [1, 2, 9, 7, 8, 3, 6, 4, 5],
           [7, 4, 6, 9, 5, 1, 2, 3, 8],
@@ -319,7 +319,7 @@ describe("sudoku", () => {
     })
 
     it("solves an version 1", () => {
-      const sudoku = Sudoku.fromMatrix([
+      const sudoku = Sudoku.fromRaw([
         [null, 3, 8, 4, 6, 2, 7, 1, 9],
         [1, 2, 9, 7, 8, 3, 6, 4, 5],
         [7, 4, 6, 9, 5, 1, 2, 3, 8],
@@ -334,7 +334,7 @@ describe("sudoku", () => {
       const solved = sudoku.solve()
 
       expect(solved.toString()).toEqual(
-        Sudoku.fromMatrix([
+        Sudoku.fromRaw([
           [5, 3, 8, 4, 6, 2, 7, 1, 9],
           [1, 2, 9, 7, 8, 3, 6, 4, 5],
           [7, 4, 6, 9, 5, 1, 2, 3, 8],
@@ -349,7 +349,7 @@ describe("sudoku", () => {
     })
 
     it("solves an version 2", () => {
-      const sudoku = Sudoku.fromMatrix([
+      const sudoku = Sudoku.fromRaw([
         [null, null, 8, 4, 6, 2, 7, 1, 9],
         [1, 2, 9, 7, 8, 3, 6, 4, 5],
         [7, 4, 6, 9, 5, 1, 2, 3, 8],
@@ -364,7 +364,7 @@ describe("sudoku", () => {
       const solved = sudoku.solve()
 
       expect(solved.toString()).toEqual(
-        Sudoku.fromMatrix([
+        Sudoku.fromRaw([
           [5, 3, 8, 4, 6, 2, 7, 1, 9],
           [1, 2, 9, 7, 8, 3, 6, 4, 5],
           [7, 4, 6, 9, 5, 1, 2, 3, 8],
@@ -379,7 +379,7 @@ describe("sudoku", () => {
     })
 
     it("solves an version 3", () => {
-      const sudoku = Sudoku.fromMatrix([
+      const sudoku = Sudoku.fromRaw([
         [null, null, 8, null, null, null, null, 1, null],
         [null, 2, null, 7, null, 3, null, 4, 5],
         [7, 4, null, null, 5, 1, null, null, 8],
@@ -394,7 +394,7 @@ describe("sudoku", () => {
       const solved = sudoku.solve()
 
       expect(solved.toString()).toEqual(
-        Sudoku.fromMatrix([
+        Sudoku.fromRaw([
           [5, 3, 8, 4, 6, 2, 7, 1, 9],
           [1, 2, 9, 7, 8, 3, 6, 4, 5],
           [7, 4, 6, 9, 5, 1, 2, 3, 8],
@@ -409,7 +409,7 @@ describe("sudoku", () => {
     })
 
     it("solves a complicated one", () => {
-      const sudoku = Sudoku.fromMatrix([
+      const sudoku = Sudoku.fromRaw([
         [null, null, null, null, null, null, 3, null, null],
         [null, null, null, null, 9, 5, null, null, null],
         [null, null, 7, 8, 4, 3, 9, 1, null],
@@ -439,7 +439,7 @@ describe("sudoku", () => {
 
   describe("toString", () => {
     it("converts the sudoku to formatted string", () => {
-      const sudoku = Sudoku.fromMatrix([
+      const sudoku = Sudoku.fromRaw([
         [4, 8, 9, 2, 6, 1, 3, 7, 5],
         [3, 1, 6, 7, 9, 5, 2, 8, 4],
         [5, 2, 7, 8, 4, 3, 9, 1, 6],

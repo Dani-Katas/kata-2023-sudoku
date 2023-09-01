@@ -7,6 +7,6 @@ export class SudokuParser {
       .split("\n")
       .map((el) => el.split("\t").map((el) => (el === "-" ? null : parseInt(el))))
 
-    return Sudoku.fromMatrix(matrix)
+    return Sudoku.fromRaw(matrix)
   }
 }

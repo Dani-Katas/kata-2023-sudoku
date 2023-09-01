@@ -18,7 +18,7 @@ describe("SudokuPaser", () => {
 
     const sudoku = sudokuParser.parse(sample)
 
-    const expectedSudoku = Sudoku.fromMatrix([
+    const expectedSudoku = Sudoku.fromRaw([
       [null, null, 8, null, null, null, null, 1, null],
       [null, 2, null, 7, null, 3, null, 4, 5],
       [7, 4, null, null, 5, 1, null, null, 8],

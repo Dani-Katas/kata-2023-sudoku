@@ -5,7 +5,7 @@ import { Position } from "./Position.js"
 import { Cell } from "./Cell.js"
 
 export class Sudoku {
-  static fromMatrix(matrix: Array<Array<number | null>>): Sudoku {
+  static fromRaw(matrix: Array<Array<number | null>>): Sudoku {
     return new Sudoku(matrix.map((el) => el.map(Cell.fromRaw)))
   }
 
