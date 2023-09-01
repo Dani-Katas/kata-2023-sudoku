@@ -9,7 +9,7 @@ describe("Sudoku solver", () => {
     const printer = new PrinterFake()
     const sudokuSolver = new SudokuSolver(fileSystem, printer)
 
-    sudokuSolver.solve("test/fixtures/3.sudoku")
+    sudokuSolver.solve("test/fixtures/1.sudoku")
 
     printer.expectCalledWith(`
       5 3 8 | 4 6 2 | 7 1 9

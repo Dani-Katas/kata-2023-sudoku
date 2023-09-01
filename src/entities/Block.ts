@@ -1,14 +1,15 @@
 import { Line } from "./Line.js"
+import { Cell } from "./Cell.js"
 
 export class Block {
   private line: Line
 
-  constructor(array: Array<number | null>) {
-    this.line = Line.fromArray(array)
+  constructor(cells: Array<Cell>) {
+    this.line = Line.fromCells(cells)
   }
 
-  static fromArray(array: Array<number | null>) {
-    return new Block(array)
+  public static fromCells(cells: Cell[]) {
+    return new Block(cells)
   }
 
   isValid() {

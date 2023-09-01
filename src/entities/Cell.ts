@@ -20,4 +20,8 @@ export class Cell {
 
     return this.value === other.value
   }
+
+  getRawValue() {
+    return this.value
+  }
 }

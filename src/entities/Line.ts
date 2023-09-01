@@ -3,10 +3,9 @@ import { Cell } from "./Cell.js"
 import { SudokuIndexes } from "./SudokuIndexes.js"
 
 export class Line {
-  constructor(private readonly array: Array<number | null>) {}
-
-  static fromArray(array: Array<number | null>) {
-    return new Line(array)
+  constructor(private readonly array: Array<Cell>) {}
+  public static fromCells(cells: Cell[]) {
+    return new Line(cells)
   }
 
   notEquals(other: Line) {
@@ -23,7 +22,7 @@ export class Line {
   }
 
   private cellAt(index: SudokuIndex): Cell {
-    return Cell.fromRaw(this.array[index.getValue()])
+    return this.array[index.getValue()]
   }
 
   isValid() {
