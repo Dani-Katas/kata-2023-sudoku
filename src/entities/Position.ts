@@ -7,15 +7,19 @@ export class Position {
 
   constructor(private readonly i: SudokuIndex, private readonly j: SudokuIndex) {}
 
-  getHorizontal() {
-    return this.i
+  getVerticalIndex() {
+    return this.i.getValue()
   }
 
-  getVertical() {
-    return this.j
+  getHorizontalIndex() {
+    return this.j.getValue()
   }
 
   equals(other: Position) {
     return this.i.equals(other.i) && this.j.equals(other.j)
+  }
+
+  hasSameRow(i: SudokuIndex) {
+    return this.i.equals(i)
   }
 }

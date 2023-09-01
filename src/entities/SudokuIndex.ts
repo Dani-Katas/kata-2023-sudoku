@@ -5,6 +5,12 @@ import { SudokuIndexes } from "./SudokuIndexes.js"
  * This can be used for Horizontal Lines, Vertical Lines and Blocks
  */
 export class SudokuIndex {
+  static *each(): Generator<SudokuIndex, void> {
+    for (let i = 0; i < 9; i++) {
+      yield new SudokuIndex(i)
+    }
+  }
+
   constructor(private readonly value: number) {}
 
   getValue(): number {

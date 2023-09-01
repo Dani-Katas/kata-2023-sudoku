@@ -7,20 +7,21 @@ import { Cell } from "./Cell.js"
 
 export class Sudoku {
   static fromMatrix(matrix: Array<Array<number | null>>): Sudoku {
-    return new Sudoku(
-      matrix,
-      matrix.map((el) => el.map(Cell.fromRaw)),
-    )
+    return new Sudoku(matrix.map((el) => el.map(Cell.fromRaw)))
   }
 
-  private readonly matrix2: Array<Array<Cell>>
+  static from(matrix: Array<Array<Cell>>): Sudoku {
+    return new Sudoku(matrix)
+  }
 
-  private constructor(private readonly matrix: Array<Array<number | null>>, matrix2: Array<Array<Cell>>) {
-    this.matrix2 = matrix2
+  private readonly matrix: Array<Array<Cell>>
+
+  private constructor(matrix: Array<Array<Cell>>) {
+    this.matrix = matrix
   }
 
   public isValid(): boolean {
-    for (const index of SudokuIndexes.iterate()) {
+    for (const index of SudokuIndex.each()) {
       const validHorizontalLine = this.horizontalLineAt(index).isValid()
       const validVerticalLine = this.verticalLineAt(index).isValid()
       const validBlock = this.blockAt(index).isValid()
@@ -34,28 +35,23 @@ export class Sudoku {
   }
 
   isFilled() {
-    for (const i of SudokuIndexes.iterate()) {
-      for (const j of SudokuIndexes.iterate()) {
-        const position = Position.at(i, j)
-        const cell = this.getCellAt(position)
-
-        if (cell.isEmpty()) {
-          return false
-        }
+    for (const position of this.eachSudokuPosition()) {
+      if (this.hasEmpty(position)) {
+        return false
       }
     }
 
     return true
   }
 
-  private getNextEmptyPosition() {
-    for (const i of SudokuIndexes.iterate()) {
-      for (const j of SudokuIndexes.iterate()) {
-        const position = Position.at(i, j)
+  private hasEmpty(position: Position) {
+    return this.getCellAt(position).isEmpty()
+  }
 
-        if (this.getCellAt(position).isEmpty()) {
-          return position
-        }
+  private getNextEmptyPosition() {
+    for (const position of this.eachSudokuPosition()) {
+      if (this.hasEmpty(position)) {
+        return position
       }
     }
   }
@@ -67,8 +63,8 @@ export class Sudoku {
       return this
     }
 
-    for (const sudokuIndex of SudokuIndexes.iterate()) {
-      const sudoku = this.writeDown(nextPosition, sudokuIndex.getValue() + 1)
+    for (const cell of Cell.values()) {
+      const sudoku = this.writeDownIn(nextPosition, cell)
 
       if (sudoku.isValid()) {
         const solved = sudoku.solve()
@@ -83,7 +79,7 @@ export class Sudoku {
   }
 
   equals(other: Sudoku) {
-    for (const index of SudokuIndexes.iterate()) {
+    for (const index of SudokuIndex.each()) {
       const line1 = this.horizontalLineAt(index)
       const line2 = other.horizontalLineAt(index)
 
@@ -98,7 +94,7 @@ export class Sudoku {
   private horizontalLineAt(horizontalIndex: SudokuIndex) {
     const elements: Array<Cell> = []
 
-    for (const verticalIndex of SudokuIndexes.iterate()) {
+    for (const verticalIndex of SudokuIndex.each()) {
       const position = Position.at(horizontalIndex, verticalIndex)
       const value = this.getCellAt(position)
       elements.push(value)
@@ -109,7 +105,7 @@ export class Sudoku {
   private verticalLineAt(verticalIndex: SudokuIndex) {
     const elements: Array<Cell> = []
 
-    for (const horizontalIndex of SudokuIndexes.iterate()) {
+    for (const horizontalIndex of SudokuIndex.each()) {
       const position = Position.at(horizontalIndex, verticalIndex)
       const value = this.getCellAt(position)
       elements.push(value)
@@ -125,7 +121,7 @@ export class Sudoku {
 
     const elements: Array<Cell> = []
 
-    for (const innerIndex of SudokuIndexes.iterate()) {
+    for (const innerIndex of SudokuIndex.each()) {
       const [mod2, div2] = innerIndex.toModDiv()
       const position = Position.at(iOffset.add(mod2), jOffset.add(div2))
       const value = this.getCellAt(position)
@@ -136,31 +132,40 @@ export class Sudoku {
   }
 
   private getCellAt(position: Position) {
-    const i = position.getHorizontal().getValue()
-    const j = position.getVertical().getValue()
-    return this.matrix2[i][j]
+    const i = position.getVerticalIndex()
+    const j = position.getHorizontalIndex()
+    return this.matrix[i][j]
   }
 
-  private writeDown(position: Position, number: number) {
-    const map = new Array(9).fill(0).map((el) => new Array(9).fill(null))
+  private writeDownIn(position: Position, cell: Cell) {
+    const map = this.createEmptyMatrixCell()
 
-    for (const i of SudokuIndexes.iterate()) {
-      for (const j of SudokuIndexes.iterate()) {
-        const currentPosition = Position.at(i, j)
+    for (const currentPosition of this.eachSudokuPosition()) {
+      const i = currentPosition.getVerticalIndex()
+      const j = currentPosition.getHorizontalIndex()
 
-        if (position.equals(currentPosition)) {
-          map[i.getValue()][j.getValue()] = number
-        } else {
-          map[i.getValue()][j.getValue()] = this.getCellAt(currentPosition).getRawValue()
-        }
-      }
+      map[i][j] = position.equals(currentPosition) ? cell : this.getCellAt(currentPosition)
     }
 
-    return Sudoku.fromMatrix(map)
+    return Sudoku.from(map)
+  }
+
+  private createEmptyMatrixCell(): Array<Array<Cell>> {
+    const fill: number[] = new Array(9).fill(0)
+
+    return fill.map((el) => new Array(9).fill(Cell.empty()))
+  }
+
+  *eachSudokuPosition() {
+    for (const i of SudokuIndex.each()) {
+      for (const j of SudokuIndex.each()) {
+        yield Position.at(i, j)
+      }
+    }
   }
 
   toString() {
-    const values = this.matrix2.map((el) => {
+    const values = this.matrix.map((el) => {
       return [
         el[0].getRawValue() ?? "-",
         el[1].getRawValue() ?? "-",

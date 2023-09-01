@@ -1,5 +1,19 @@
 export class Cell {
+  static *values() {
+    for (let value = 1; value <= 9; value++) {
+      yield Cell.of(value)
+    }
+  }
+
   constructor(private readonly value: number | null) {}
+
+  static of(number: number) {
+    return new Cell(number)
+  }
+
+  static empty() {
+    return new Cell(null)
+  }
 
   static fromRaw(arrayElement: number | null) {
     return new Cell(arrayElement)
