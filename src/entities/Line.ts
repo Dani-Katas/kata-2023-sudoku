@@ -1,6 +1,5 @@
 import { SudokuIndex } from "./SudokuIndex.js"
 import { Cell } from "./Cell.js"
-import { SudokuIndexes } from "./SudokuIndexes.js"
 
 export class Line {
   constructor(private readonly array: Array<Cell>) {}
@@ -9,7 +8,7 @@ export class Line {
   }
 
   notEquals(other: Line) {
-    for (const index of SudokuIndexes.iterate()) {
+    for (const index of SudokuIndex.each()) {
       const cell1 = this.cellAt(index)
       const cell2 = other.cellAt(index)
 
@@ -26,9 +25,9 @@ export class Line {
   }
 
   isValid() {
-    for (const index1 of SudokuIndexes.iterate()) {
+    for (const index1 of SudokuIndex.each()) {
       const cell = this.cellAt(index1)
-      for (const index2 of SudokuIndexes.iterate()) {
+      for (const index2 of SudokuIndex.each()) {
         const cell2 = this.cellAt(index2)
 
         const isNotTheSameCell = index1.notEquals(index2)
@@ -41,5 +40,10 @@ export class Line {
     }
 
     return true
+  }
+
+  toString() {
+    const el = this.array
+    return [el[0], el[1], el[2], "|", el[3], el[4], el[5], "|", el[6], el[7], el[8]].join(" ")
   }
 }

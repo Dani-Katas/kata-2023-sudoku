@@ -18,8 +18,4 @@ export class Position {
   equals(other: Position) {
     return this.i.equals(other.i) && this.j.equals(other.j)
   }
-
-  hasSameRow(i: SudokuIndex) {
-    return this.i.equals(i)
-  }
 }

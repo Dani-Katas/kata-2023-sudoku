@@ -1,6 +1,5 @@
 import { SudokuIndex } from "./SudokuIndex.js"
 import { Line } from "./Line.js"
-import { SudokuIndexes } from "./SudokuIndexes.js"
 import { Block } from "./Block.js"
 import { Position } from "./Position.js"
 import { Cell } from "./Cell.js"
@@ -34,7 +33,7 @@ export class Sudoku {
     return true
   }
 
-  isFilled() {
+  private isFilled() {
     for (const position of this.eachSudokuPosition()) {
       if (this.hasEmpty(position)) {
         return false
@@ -156,7 +155,7 @@ export class Sudoku {
     return fill.map((el) => new Array(9).fill(Cell.empty()))
   }
 
-  *eachSudokuPosition() {
+  private *eachSudokuPosition() {
     for (const i of SudokuIndex.each()) {
       for (const j of SudokuIndex.each()) {
         yield Position.at(i, j)
@@ -165,34 +164,22 @@ export class Sudoku {
   }
 
   toString() {
-    const values = this.matrix.map((el) => {
-      return [
-        el[0].getRawValue() ?? "-",
-        el[1].getRawValue() ?? "-",
-        el[2].getRawValue() ?? "-",
-        "|",
-        el[3].getRawValue() ?? "-",
-        el[4].getRawValue() ?? "-",
-        el[5].getRawValue() ?? "-",
-        "|",
-        el[6].getRawValue() ?? "-",
-        el[7].getRawValue() ?? "-",
-        el[8].getRawValue() ?? "-",
-      ].join(" ")
-    })
+    const linesFormatted = new Array(...SudokuIndex.each())
+      .map((el) => this.horizontalLineAt(el))
+      .map((line) => line.toString())
 
     return [
-      values[0],
-      values[1],
-      values[2],
+      linesFormatted[0],
+      linesFormatted[1],
+      linesFormatted[2],
       "---------------------",
-      values[3],
-      values[4],
-      values[5],
+      linesFormatted[3],
+      linesFormatted[4],
+      linesFormatted[5],
       "---------------------",
-      values[6],
-      values[7],
-      values[8],
+      linesFormatted[6],
+      linesFormatted[7],
+      linesFormatted[8],
     ].join("\n")
   }
 }
