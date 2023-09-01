@@ -9,7 +9,7 @@ export class SudokuSolver {
 
   solve(path: string) {
     const sudokuRaw = this.fileSystem.readFileSync(path)
-    const sudoku: Sudoku = this.sudokuParser.parse(sudokuRaw)
+    const sudoku = this.sudokuParser.parse(sudokuRaw)
     const solved = sudoku.solve()
     this.printer.log(solved.toString())
   }
