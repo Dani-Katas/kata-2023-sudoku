@@ -3,6 +3,7 @@ import { Line } from "./Line.js"
 import { SudokuIndexes } from "./SudokuIndexes.js"
 import { Block } from "./Block.js"
 import { Position } from "./Position.js"
+import { Cell } from "./Cell.js"
 
 export class Sudoku {
   static fromMatrix(matrix: Array<Array<number | null>>): Sudoku {
@@ -39,8 +40,57 @@ export class Sudoku {
     return true
   }
 
+  isFilled() {
+    for (const i of SudokuIndexes.iterate()) {
+      for (const j of SudokuIndexes.iterate()) {
+        const position = Position.at(i, j)
+        const cell = this.getCellAt(position)
+
+        if (cell.isEmpty()) {
+          return false
+        }
+      }
+    }
+
+    return true
+  }
+
   solve(): Sudoku {
-    throw new Error("Unimplemented method Sudoku#solve")
+    const something: Array<Array<Sudoku>> = []
+
+    for (const i of SudokuIndexes.iterate()) {
+      for (const j of SudokuIndexes.iterate()) {
+        const position = Position.at(i, j)
+        const cell = this.getCellAt(position)
+
+        if (cell.isEmpty()) {
+          const sudokus: Array<Sudoku> = []
+          for (const val of SudokuIndexes.iterate()) {
+            const sudoku = this.writeDown(position, val.getValue() + 1)
+
+            if (sudoku.isValid()) {
+              sudokus.push(sudoku)
+            }
+          }
+
+          something.push(sudokus)
+        }
+      }
+    }
+
+    const sorted = something.sort((a, b) => a.length - b.length)
+
+    for (const sortedElement of sorted) {
+      for (const sudokus of sortedElement) {
+        const solved = sudokus.solve()
+
+        if (solved.isFilled()) {
+          return solved
+        }
+      }
+    }
+
+    return this
   }
 
   equals(other: Sudoku) {
@@ -102,17 +152,57 @@ export class Sudoku {
     return this.matrix[i][j]
   }
 
+  private getCellAt(position: Position) {
+    return new Cell(this.getAt(position))
+  }
+
+  private writeDown(position: Position, number: number) {
+    const map = new Array(9).fill(0).map((el) => new Array(9).fill(null))
+
+    for (const i of SudokuIndexes.iterate()) {
+      for (const j of SudokuIndexes.iterate()) {
+        const currentPosition = Position.at(i, j)
+
+        if (position.equals(currentPosition)) {
+          map[i.getValue()][j.getValue()] = number
+        } else {
+          map[i.getValue()][j.getValue()] = this.getAt(currentPosition)
+        }
+      }
+    }
+
+    return Sudoku.fromMatrix(map)
+  }
+
   toString() {
-    return `1 3 8 | 4 6 2 | 7 1 9
-1 2 9 | 7 8 3 | 6 4 5
-7 4 6 | 9 5 1 | 2 3 8
----------------------
-8 5 2 | 3 7 9 | 1 6 4
-6 1 3 | 2 4 5 | 9 8 7
-4 9 7 | 8 1 6 | 3 5 2
----------------------
-9 8 4 | 6 3 7 | 5 2 1
-2 6 5 | 1 9 8 | 4 7 3
-3 7 1 | 5 2 4 | 8 9 6`
+    const values = this.matrix.map((el) => {
+      return [
+        el[0] ?? "-",
+        el[1] ?? "-",
+        el[2] ?? "-",
+        "|",
+        el[3] ?? "-",
+        el[4] ?? "-",
+        el[5] ?? "-",
+        "|",
+        el[6] ?? "-",
+        el[7] ?? "-",
+        el[8] ?? "-",
+      ].join(" ")
+    })
+
+    return [
+      values[0],
+      values[1],
+      values[2],
+      "---------------------",
+      values[3],
+      values[4],
+      values[5],
+      "---------------------",
+      values[6],
+      values[7],
+      values[8],
+    ].join("\n")
   }
 }

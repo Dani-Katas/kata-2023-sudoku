@@ -29,4 +29,8 @@ export class SudokuIndex {
   times(other: number) {
     return new SudokuIndex(this.value * other)
   }
+
+  equals(other: SudokuIndex) {
+    return !this.notEquals(other)
+  }
 }

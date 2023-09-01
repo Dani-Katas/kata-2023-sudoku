@@ -14,4 +14,8 @@ export class Position {
   getVertical() {
     return this.j
   }
+
+  equals(other: Position) {
+    return this.i.equals(other.i) && this.j.equals(other.j)
+  }
 }
