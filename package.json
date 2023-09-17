@@ -1,7 +1,7 @@
 {
-  "name": "typescript-boilerplate",
+  "name": "typescript-sudoku-kata",
   "version": "1.0.0",
-  "description": "Basic boilerplate project with Typecript",
+  "description": "Sudoku resolver implementation",
   "main": "build/main.js",
   "engineStrict": true,
   "engines": {
@@ -9,15 +9,15 @@
   },
   "type": "module",
   "contributors": [
-    "Daniel Ramos <danielramosacosta@hotmail.com>",
-    "Ruben Moya <rmoyarodriguez@gmail.com>"
+    "Daniel Ramos <danielramosacosta@hotmail.com>"
   ],
   "license": "ISC",
   "scripts": {
     "clean": "rimraf coverage build tmp",
     "build": "tsc --project .",
     "test": "vitest",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "18.15.7",

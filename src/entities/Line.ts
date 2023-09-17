@@ -2,10 +2,11 @@ import { SudokuIndex } from "./SudokuIndex.js"
 import { Cell } from "./Cell.js"
 
 export class Line {
-  constructor(private readonly array: Array<Cell>) {}
   public static fromCells(cells: Cell[]) {
     return new Line(cells)
   }
+
+  private constructor(private readonly array: Array<Cell>) {}
 
   notEquals(other: Line) {
     for (const index of SudokuIndex.each()) {
@@ -21,7 +22,7 @@ export class Line {
   }
 
   private cellAt(index: SudokuIndex): Cell {
-    return this.array[index.getValue()]
+    return index.getFrom(this.array)
   }
 
   isValid() {
@@ -43,7 +44,18 @@ export class Line {
   }
 
   toString() {
-    const el = this.array
-    return [el[0], el[1], el[2], "|", el[3], el[4], el[5], "|", el[6], el[7], el[8]].join(" ")
+    return [
+      this.array[0],
+      this.array[1],
+      this.array[2],
+      "|",
+      this.array[3],
+      this.array[4],
+      this.array[5],
+      "|",
+      this.array[6],
+      this.array[7],
+      this.array[8],
+    ].join(" ")
   }
 }

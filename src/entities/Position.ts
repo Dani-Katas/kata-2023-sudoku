@@ -5,14 +5,14 @@ export class Position {
     return new Position(i, j)
   }
 
-  constructor(private readonly i: SudokuIndex, private readonly j: SudokuIndex) {}
+  private constructor(private readonly i: SudokuIndex, private readonly j: SudokuIndex) {}
 
-  getVerticalIndex() {
-    return this.i.getValue()
+  getFrom<T>(array: Array<Array<T>>) {
+    return this.j.getFrom(this.i.getFrom(array))
   }
 
-  getHorizontalIndex() {
-    return this.j.getValue()
+  writeIn<T>(array: Array<Array<T>>, value: T) {
+    this.j.writeIn(this.i.getFrom(array), value)
   }
 
   equals(other: Position) {

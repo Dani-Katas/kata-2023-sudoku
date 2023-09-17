@@ -1,15 +1,11 @@
 import { CellDigit, EmptyCellDigit } from "./CellDigit.js"
 
 export class Cell {
-  static *values() {
-    for (let value = 1; value <= 9; value++) {
-      yield Cell.of(value)
+  static with(number: CellDigit | number) {
+    if (number instanceof CellDigit) {
+      return new Cell(number)
     }
-  }
 
-  constructor(private readonly digit: CellDigit) {}
-
-  static of(number: number) {
     return new Cell(CellDigit.of(number))
   }
 
@@ -20,6 +16,8 @@ export class Cell {
   static fromRaw(arrayElement: number | null) {
     return new Cell(CellDigit.fromNullable(arrayElement))
   }
+
+  private constructor(private readonly digit: CellDigit) {}
 
   notEquals(other: Cell) {
     return this.digit.notEquals(other.digit)

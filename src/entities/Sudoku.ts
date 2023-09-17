@@ -132,19 +132,16 @@ export class Sudoku {
   }
 
   private getCellAt(position: Position) {
-    const i = position.getVerticalIndex()
-    const j = position.getHorizontalIndex()
-    return this.matrix[i][j]
+    return position.getFrom(this.matrix)
   }
 
   private writeDownIn(position: Position, digit: CellDigit) {
     const map = this.createEmptyMatrixCell()
 
     for (const currentPosition of this.eachSudokuPosition()) {
-      const i = currentPosition.getVerticalIndex()
-      const j = currentPosition.getHorizontalIndex()
+      const cell = position.equals(currentPosition) ? Cell.with(digit) : this.getCellAt(currentPosition)
 
-      map[i][j] = position.equals(currentPosition) ? new Cell(digit) : this.getCellAt(currentPosition)
+      currentPosition.writeIn(map, cell)
     }
 
     return Sudoku.from(map)

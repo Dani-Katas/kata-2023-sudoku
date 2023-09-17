@@ -9,19 +9,24 @@ export class SudokuIndex {
     }
   }
 
-  constructor(private readonly value: number) {}
+  private constructor(private readonly value: number) {}
 
-  getValue(): number {
-    return this.value
+  getFrom<T>(array: Array<T>) {
+    return array[this.value]
+  }
+
+  writeIn<T>(array: Array<T>, value: T) {
+    array[this.value] = value
   }
 
   notEquals(other: SudokuIndex) {
-    return this.value !== other.getValue()
+    return this.value !== other.value
   }
 
   toModDiv() {
-    const mod1 = this.getValue() % 3
-    const div1 = Math.floor(this.getValue() / 3)
+    const blockSize = 3
+    const mod1 = this.value % blockSize
+    const div1 = Math.floor(this.value / blockSize)
 
     return [new SudokuIndex(mod1), new SudokuIndex(div1)] as const
   }

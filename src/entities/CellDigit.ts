@@ -1,8 +1,11 @@
 import { CellValueOutOfRangeError } from "../errors/CellValueOutOfRangeError.js"
 
 export class CellDigit {
+  private static MINIMUM = 1
+  private static MAXIMUM = 9
+
   static *digits() {
-    for (let value = 1; value <= 9; value++) {
+    for (let value = this.MINIMUM; value <= this.MAXIMUM; value++) {
       yield CellDigit.of(value)
     }
   }
@@ -20,7 +23,7 @@ export class CellDigit {
   }
 
   private ensureIsValid() {
-    if (this.value < 1 || this.value > 9) {
+    if (this.value < CellDigit.MINIMUM || this.value > CellDigit.MAXIMUM) {
       throw new CellValueOutOfRangeError(this.value)
     }
   }
@@ -44,11 +47,12 @@ export class CellDigit {
 
 export class EmptyCellDigit extends CellDigit {
   constructor() {
-    super(1)
+    const notImportant = 1
+    super(notImportant)
   }
 
   notEquals(other: CellDigit): boolean {
-    return !(other instanceof EmptyCellDigit)
+    return !this.equals(other)
   }
 
   equals(other: CellDigit): boolean {
