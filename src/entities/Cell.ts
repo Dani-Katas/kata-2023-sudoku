@@ -1,4 +1,4 @@
-import { CellValue, EmptyCellValue } from "./CellValue.js"
+import { CellDigit, EmptyCellDigit } from "./CellDigit.js"
 
 export class Cell {
   static *values() {
@@ -7,26 +7,26 @@ export class Cell {
     }
   }
 
-  constructor(private readonly value: CellValue) {}
+  constructor(private readonly digit: CellDigit) {}
 
   static of(number: number) {
-    return new Cell(CellValue.of(number))
+    return new Cell(CellDigit.of(number))
   }
 
   static empty() {
-    return new Cell(new EmptyCellValue())
+    return new Cell(new EmptyCellDigit())
   }
 
   static fromRaw(arrayElement: number | null) {
-    return new Cell(CellValue.fromNullable(arrayElement))
+    return new Cell(CellDigit.fromNullable(arrayElement))
   }
 
   notEquals(other: Cell) {
-    return this.value.notEquals(other.value)
+    return this.digit.notEquals(other.digit)
   }
 
   isEmpty() {
-    return this.value instanceof EmptyCellValue
+    return this.digit instanceof EmptyCellDigit
   }
 
   hasSameNumber(other: Cell) {
@@ -34,10 +34,10 @@ export class Cell {
       return false
     }
 
-    return this.value.equals(other.value)
+    return this.digit.equals(other.digit)
   }
 
   toString() {
-    return this.value.toString()
+    return this.digit.toString()
   }
 }

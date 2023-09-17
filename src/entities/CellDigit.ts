@@ -1,18 +1,18 @@
 import { CellValueOutOfRangeError } from "../errors/CellValueOutOfRangeError.js"
 
-export class CellValue {
-  static *values() {
+export class CellDigit {
+  static *digits() {
     for (let value = 1; value <= 9; value++) {
-      yield CellValue.of(value)
+      yield CellDigit.of(value)
     }
   }
 
   static of(number: number) {
-    return new CellValue(number)
+    return new CellDigit(number)
   }
 
   static fromNullable(number: number | null) {
-    return number ? new CellValue(number) : new EmptyCellValue()
+    return number ? new CellDigit(number) : new EmptyCellDigit()
   }
 
   constructor(private readonly value: number) {
@@ -25,15 +25,15 @@ export class CellValue {
     }
   }
 
-  equals(other: CellValue) {
-    if (other instanceof EmptyCellValue) {
+  equals(other: CellDigit) {
+    if (other instanceof EmptyCellDigit) {
       return false
     }
 
     return this.value === other.value
   }
 
-  notEquals(other: CellValue) {
+  notEquals(other: CellDigit) {
     return !this.equals(other)
   }
 
@@ -42,17 +42,17 @@ export class CellValue {
   }
 }
 
-export class EmptyCellValue extends CellValue {
+export class EmptyCellDigit extends CellDigit {
   constructor() {
     super(1)
   }
 
-  notEquals(other: CellValue): boolean {
-    return !(other instanceof EmptyCellValue)
+  notEquals(other: CellDigit): boolean {
+    return !(other instanceof EmptyCellDigit)
   }
 
-  equals(other: CellValue): boolean {
-    return other instanceof EmptyCellValue
+  equals(other: CellDigit): boolean {
+    return other instanceof EmptyCellDigit
   }
 
   toString(): string {

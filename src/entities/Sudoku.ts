@@ -3,6 +3,7 @@ import { Line } from "./Line.js"
 import { Block } from "./Block.js"
 import { Position } from "./Position.js"
 import { Cell } from "./Cell.js"
+import { CellDigit } from "./CellDigit.js"
 
 export class Sudoku {
   static fromRaw(matrix: Array<Array<number | null>>): Sudoku {
@@ -62,8 +63,8 @@ export class Sudoku {
       return this
     }
 
-    for (const cell of Cell.values()) {
-      const sudoku = this.writeDownIn(nextPosition, cell)
+    for (const digit of CellDigit.digits()) {
+      const sudoku = this.writeDownIn(nextPosition, digit)
 
       if (sudoku.isValid()) {
         const solved = sudoku.solve()
@@ -136,14 +137,14 @@ export class Sudoku {
     return this.matrix[i][j]
   }
 
-  private writeDownIn(position: Position, cell: Cell) {
+  private writeDownIn(position: Position, digit: CellDigit) {
     const map = this.createEmptyMatrixCell()
 
     for (const currentPosition of this.eachSudokuPosition()) {
       const i = currentPosition.getVerticalIndex()
       const j = currentPosition.getHorizontalIndex()
 
-      map[i][j] = position.equals(currentPosition) ? cell : this.getCellAt(currentPosition)
+      map[i][j] = position.equals(currentPosition) ? new Cell(digit) : this.getCellAt(currentPosition)
     }
 
     return Sudoku.from(map)

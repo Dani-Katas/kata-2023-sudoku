@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest"
-import { CellValue } from "./CellValue.js"
+import { CellDigit } from "./CellDigit.js"
 
-describe("CellValue", () => {
+describe("CellDigit", () => {
   it.each([[1], [2], [3], [4], [5], [6], [7], [8], [9]])("%s is instantiable", (raw) => {
-    const value = CellValue.of(raw)
+    const value = CellDigit.of(raw)
 
     expect(value.toString()).toEqual(raw.toString())
   })
@@ -11,12 +11,12 @@ describe("CellValue", () => {
   it("throws exception if value is below 1", () => {
     const raw = 0
 
-    expect(() => CellValue.of(raw)).toThrowError()
+    expect(() => CellDigit.of(raw)).toThrowError()
   })
 
   it("throws exception if value is above 9", () => {
     const raw = 10
 
-    expect(() => CellValue.of(raw)).toThrowError()
+    expect(() => CellDigit.of(raw)).toThrowError()
   })
 })
