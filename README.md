@@ -1,4 +1,4 @@
-# TypeScript Kata Setup
+# Sudoku Kata
 
 Includes:
 
